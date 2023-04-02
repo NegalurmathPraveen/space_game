@@ -20,6 +20,7 @@ import 'screens/game_play_screen.dart';
 import 'screens/start_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: GamePlay(),));
