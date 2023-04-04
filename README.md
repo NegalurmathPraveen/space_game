@@ -4,13 +4,16 @@ what has been completed:
 
 1. the game has start page on click of which the game will begin
 2. the game is played in full screen landscape mode
-3. In the game screen page a score indicator is shown on the top left corner of the page (the score is the time(in seconds) for which the user remains playing)
-4. in the top right corner user can see the number of lives left (also tried )
+3. In the game screen page time is shown on the top right corner of the page
+4. in the top left corner user can see the number of lives left (also tried )
 5. the player can be dragged up and down 
 6. the number of obstacles rendered on the screen will be based on the time 
 7. on collision with the obstacles a collision sound is produced and also the sound can be heard when the player is dragged up and down
 8. a pause game button is rendered on the bottom left corner of the screen using overlay
 9. on exhaustion of all the three lives the game will end with a game over screen
+10. the letters are rendered on the screen
+11. whenever the player collides with correct letters that letter changes it's color to amber from white
+12. on success when the player clicks on the screen the words will change randomly
 
 
 what is not completed:
@@ -18,7 +21,6 @@ what is not completed:
 1. the word and the letters to be rendered on the screen
 2. the collision animation (half done)
 3. not tested for iphones
-4. trophy dialog to be rendered after successful completion
 
 deployment steps:
 
@@ -36,5 +38,5 @@ deployment steps:
 
 known bugs:
 
-1. the sound on dragging player up or down repeats multiple time 
-2. the player currently can move out of the screen (to be updated)
+1.the changing of colors of the letters of the word overlaps sometimes
+2. the obstacles are grouped sometimes and may go out of the screen
