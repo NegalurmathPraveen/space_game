@@ -2,13 +2,12 @@ import 'package:flame/components.dart';
 import 'package:flame/experimental.dart';
 import 'package:flame/flame.dart';
 import 'package:flutter/material.dart' hide Route;
-import 'package:spacex/screens/game_play_screen.dart';
 
 import '../main.dart';
 import '../overlays/pause_button.dart';
 
 
-class GameOverScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks {
+class SuccessScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks {
   @override
   void onLoad() async {
     await super.onLoad();
@@ -25,11 +24,11 @@ class GameOverScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
     );
     add(
       TextComponent(
-        text: 'GAME OVER',
+        text: 'CONGRATULATIONS',
         anchor: Anchor.center,
         position: gameRef.size / 2,
         textRenderer:
-            TextPaint(style: const TextStyle(fontSize: 64, color: Colors.red)),
+        TextPaint(style: const TextStyle(fontSize: 64, color: Colors.amber)),
       ),
     );
   }
@@ -50,11 +49,12 @@ class GameOverScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
   @override
   void onTapUp(TapUpEvent event) {
     gameRef.player.position = gameRef.size / 2;
-    gameRef.showingGameOverScreen = false;
-    gameRef.gameOver = false;
+    gameRef.showingSuccessScreen = false;
+    gameRef.success = false;
     gameRef.router.pop();
-    gameRef.elapsedTime.start();
-    gameRef.overlays.add(PauseButton.ID);
+   gameRef.elapsedTime.start();
+   gameRef.overlays.add(PauseButton.ID);
+    gameRef.lives=3;
     gameRef.resumeEngine();
     super.onTapUp(event);
   }

@@ -6,16 +6,18 @@ import 'package:flame/parallax.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:spacex/actors/letter_obstacles.dart';
+import 'package:spacex/actors/word_display.dart';
+import 'package:spacex/actors/word_letters.dart';
 
 
 import '../actors/obstacle.dart';
 import '../gui/elapsed_time.dart';
-import '../gui/lifeLeft.dart';
 import '../main.dart';
 import '../utils/audio_manager.dart';
 
 class GamePlayScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks {
   Timer interval = Timer(6, repeat: true);
+
 
   @override
   void onLoad() async {
@@ -29,12 +31,12 @@ class GamePlayScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
     );
     add(mountainBackground);
 
+    add(gameRef.hud);
     add(gameRef.player);
-    add(gameRef.heart);
-    add(gameRef.letterObstacles);
+    add(LetterObstacles());
+    add(WordLetters());
+    add(gameRef.wordDisplay);
     addShips();
-    add(ElapsedTime());
-    add(LivesLeft());
   }
 
   void addShips() {
@@ -43,21 +45,39 @@ class GamePlayScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
 
       void addShipAtSecond(int secondToAdd) {
         Future.delayed(Duration(seconds: secondToAdd), () {
-          add(Obstacle());
           add(LetterObstacles());
         });
       }
 
+      void addlettersAtSecond(int secondToAdd) {
+        Future.delayed(Duration(seconds: secondToAdd), () {
+          add(Obstacle());
+        });
+      }
+
+      void addWordAtSecond(int secondToAdd) {
+        Future.delayed(Duration(seconds: secondToAdd), () {
+          add(WordLetters());
+        });
+      }
+
       add(Obstacle());
+      add(WordLetters());
       add(LetterObstacles());
       if (elapsedSeconds > 10.0) {
         addShipAtSecond(3);
+        addlettersAtSecond(5);
+        addWordAtSecond(2);
       }
       if (elapsedSeconds > 20.0) {
         addShipAtSecond(2);
+        addlettersAtSecond(4);
+        addShipAtSecond(1);
       }
       if (elapsedSeconds > 30.0) {
         addShipAtSecond(4);
+        addlettersAtSecond(6);
+        addWordAtSecond(3);
       }
     };
   }
@@ -68,13 +88,4 @@ class GamePlayScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
     super.update(dt);
   }
 
-  @override
-  bool containsLocalPoint(Vector2 point) => true;
-
-  @override
-  void onTapUp(TapUpEvent event) {
-    gameRef.gravity.y -= 20;
-
-    super.onTapUp(event);
-  }
 }

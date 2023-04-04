@@ -1,8 +1,10 @@
 import 'dart:math';
+import 'dart:ui' hide TextStyle;
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/effects.dart';
 import 'package:flame_audio/flame_audio.dart';
+import 'package:flutter/material.dart';
 import 'package:spacex/actors/player.dart';
 import 'package:spacex/widgets/blast_animation.dart';
 
@@ -24,6 +26,8 @@ class Obstacle extends SpriteComponent with HasGameRef<SpaceGame>,CollisionCallb
     double yPosition = _random.nextDouble() * game.size.y;
     position = Vector2(gameRef.size.x * .95, yPosition);
     add(CircleHitbox(anchor: Anchor.center, radius: size.y * .35, position: size / 2));
+
+
   }
 
   @override
@@ -45,29 +49,9 @@ class Obstacle extends SpriteComponent with HasGameRef<SpaceGame>,CollisionCallb
   }
   @override
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
-    print('entered');
-       if(other is Player)
-       {
-         if(gameRef.lives>0)
-         {
-           gameRef.add(BlastAnimation());
-           AudioManager.playSfx('audio_life_lost.mp3');
-           gameRef.lives-=1;
-           removeFromParent();
-           print(gameRef.lives);
-         }
-         else
-         {
-           gameRef.gameOver = true;
-           AudioManager.stopBgm();
-           gameRef.overlays.remove(PauseButton.ID);
-           gameRef.lives=2;
-         }
-       }
-
-
-    super.onCollisionStart(intersectionPoints, other);
-  }
+     if(other is Player)
+      removeFromParent();
+    }
   @override
   void onCollisionEnd(PositionComponent other) {
 

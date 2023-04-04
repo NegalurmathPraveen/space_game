@@ -9,13 +9,13 @@ class ElapsedTime extends TextComponent with HasGameRef<SpaceGame> {
     await super.onLoad();
     scale = Vector2.all(2.5);
     anchor=Anchor.topLeft;
-    position = Vector2(gameRef.size.x * .03, 3);
+    position = Vector2(gameRef.size.x * .8, 3);
     textRenderer = TextPaint(style: const TextStyle(color: Colors.white));
   }
 
   @override
   void update(double dt) {
-    text = 'Score: ${gameRef.elapsedTime.elapsed.inSeconds}';
+    text = 'time: ${gameRef.elapsedTime.elapsed.inSeconds}';
 
     super.update(dt);
   }

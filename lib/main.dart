@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flame/effects.dart';
 import 'package:flame/events.dart';
 import  'package:flame/experimental.dart';
@@ -6,11 +8,12 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart' hide Route;
+import 'package:spacex/actors/lives.dart';
 import 'package:spacex/actors/letter_obstacles.dart';
+import 'package:spacex/actors/word_display.dart';
+import 'package:spacex/screens/success.dart';
 import 'package:spacex/utils/audio_manager.dart';
 
-import 'gui/heart.dart';
-import 'overlays/life.dart';
 import 'overlays/pause_button.dart';
 import 'overlays/pause_menu.dart';
 import 'widgets/blast_animation.dart';
@@ -46,7 +49,6 @@ class GamePlay extends StatelessWidget {
           overlayBuilderMap: {
             PauseButton.ID:(BuildContext context,SpaceGame gameRef)=>PauseButton(gameRef:gameRef,),
             PauseMenu.ID:(BuildContext context,SpaceGame gameRef)=>PauseMenu(gameRef:gameRef,),
-            Life.ID:(BuildContext context,SpaceGame gameRef)=>Life(gameRef:gameRef,),
           },
         ),
       ),
@@ -56,20 +58,26 @@ class GamePlay extends StatelessWidget {
 class SpaceGame extends FlameGame
     with HasTappableComponents,HasCollisionDetection,VerticalDragDetector {
   Player player=Player();
-  Heart heart=Heart();
+  WordDisplay wordDisplay=WordDisplay();
+  Hud hud=Hud();
+  List wordsList=[['G','U','M'],['S','I','M']];
+  List list=['T','A','P'];
+  List list1=['T','A','P'];
   LetterObstacles letterObstacles=LetterObstacles();
   BlastAnimation blast=BlastAnimation();
-  Vector2 gravity = Vector2(0, 30);
   late final RouterComponent router;
   bool gameOver = false;
   bool showingGameOverScreen = false;
-  //Player crow = Player();
+  bool success = false;
+  bool showingSuccessScreen= false;
+  final _random = Random();
   Stopwatch elapsedTime = Stopwatch();
  Vector2? pointerStartPosition=Vector2(0,0);
  Vector2? pointerCurrentPosition=Vector2(0,0);
   Vector2? delta;
   Image life=Image.asset('life.png');
-  var lives=2;
+  var lives=3;
+  HeartHealthComponent heartHealthComponent=HeartHealthComponent(heartNumber: 3, position: Vector2(0, 0), size: Vector2(0, 0));
   @override
   void onLoad() async {
     super.onLoad();
@@ -79,9 +87,11 @@ class SpaceGame extends FlameGame
       router = RouterComponent(
         initialRoute: 'start',
         routes: {
+          'start': Route(StartScreen.new),
           'gameplay': Route(GamePlayScreen.new),
           'gameover': Route(GameOverScreen.new),
-          'start': Route(StartScreen.new),
+          'success':Route(SuccessScreen.new)
+
         },
       ),
     );
@@ -92,7 +102,15 @@ class SpaceGame extends FlameGame
     if (gameOver && !showingGameOverScreen) {
       router.pushNamed('gameover');
       showingGameOverScreen = true;
+      list.removeRange(0,list.length);
+      list.addAll(['T','A','P']);
     }
+    else if(success &&!showingSuccessScreen)
+      {
+        router.pushNamed('success');
+        showingSuccessScreen = true;
+        list.addAll(wordsList.elementAt(_random.nextInt(wordsList.length)));
+      }
     super.update(dt);
   }
 
