@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 
 class Text extends TextComponent with HasGameRef<SpaceGame>{
-  final int num;
+  var textNum;
   Text({
-    required this.num,
+    required this.textNum,
     required super.text,
     required super.textRenderer,
     required super.position,
@@ -19,15 +19,16 @@ class Text extends TextComponent with HasGameRef<SpaceGame>{
     super.anchor,
     super.priority,
   });
-
+var text1;
   @override
   void update(double dt) {
-    if (gameRef.list.length < num) {
+    this.text=text;
+    if (textNum < gameRef.list.length) {
       print('num:$num');
       print('list:${gameRef.list}');
-        if(!gameRef.list.contains(text))
+        if(!gameRef.list.contains(this.text))
           {
-            text=text;
+            this.text=text;
             textRenderer=TextPaint(
               style: const TextStyle(
                 fontSize: 45,
@@ -36,9 +37,8 @@ class Text extends TextComponent with HasGameRef<SpaceGame>{
               ),
             );
           }
-
     }
-    else{
+    else if(textNum == num){
       text=text;
       textRenderer=TextPaint(
         style: const TextStyle(
@@ -48,6 +48,10 @@ class Text extends TextComponent with HasGameRef<SpaceGame>{
         ),
       );
     }
+    else if(gameRef.list.length==0)
+      {
+        removeFromParent();
+      }
     super.update(dt);
   }
 }
@@ -55,56 +59,31 @@ class Text extends TextComponent with HasGameRef<SpaceGame>{
 class WordDisplay extends PositionComponent with HasGameRef<SpaceGame>{
   var list;
   late TextComponent _textComponent;
+  var text1;
   @override
   Future<void>? onLoad()async
   {
-    // print('word_display:${gameRef.list}');
-    //  list=gameRef.list;
-    //      // final positionX = 40 * i;
-    // _textComponent=TextComponent(text:list.join(''),
-    //   textRenderer: TextPaint(
-    //     style: const TextStyle(
-    //       fontSize: 50,
-    //       fontWeight:FontWeight.w600,
-    //       color: Colors.amber,
-    //     ),
-    //   ),
-    //   position: Vector2(40+game.size.x*0.45,game.size.y*0.05),
-    //   size:Vector2(gameRef.size.y * 600 / 469, gameRef.size.y) * .10,
-    //   anchor: Anchor.center,
-    // );
-    //       add(_textComponent);
-
+    text1=gameRef.list;
     for (var i = 0; i < gameRef.list.length; i++) {
       final positionX = 40 * i;
-      _textComponent=Text(
-        text: gameRef.list[i],
-        textRenderer: TextPaint(
-          style: const TextStyle(
-            fontSize: 45,
-            fontWeight: FontWeight.w600,
-            color: Colors.white60,
-          ),
-        ),
-        position: Vector2(positionX.toDouble()+gameRef.size.x*0.45, 20),
-        size:Vector2(gameRef.size.y * 800 / 469, gameRef.size.y) * .10,
-        anchor: Anchor.center, num: gameRef.list.length,
-      );
       await add(
-          _textComponent
+          Text(
+            textNum:i,
+            text: text1[i],
+            textRenderer: TextPaint(
+              style: const TextStyle(
+                fontSize: 45,
+                fontWeight: FontWeight.w600,
+                color: Colors.white60,
+              ),
+            ),
+            position: Vector2(positionX.toDouble()+gameRef.size.x*0.45,10),
+            size:Vector2(gameRef.size.y * 800 / 469, gameRef.size.y) * .10,
+            anchor: Anchor.topLeft
+          )
       );
     }
     return super.onLoad();
-  }
-
-  @override
-  void update(double dt) {
-    print('list:${gameRef.list}');
-    for (var i = 0; i < gameRef.list.length; i++) {
-      _textComponent.text=gameRef.list[i];
-      print(_textComponent.text);
-    }
-    super.update(dt);
   }
 
 }

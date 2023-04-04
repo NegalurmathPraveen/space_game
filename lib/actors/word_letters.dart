@@ -78,6 +78,7 @@ class WordLetters extends PositionComponent with HasGameRef<SpaceGame>,Collision
       removeFromParent();
       if(_scoreTextComponent.text==gameRef.list[0])
       {
+        gameRef.list1.add(gameRef.list[0]);
         gameRef.list.removeAt(0);
         gameRef.removeFromParent();
         if(gameRef.list.length==0)

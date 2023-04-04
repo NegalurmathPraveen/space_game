@@ -15,7 +15,7 @@ class SuccessScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks {
 
     add(
       TextComponent(
-        text:'score: ${gameRef.elapsedTime.elapsed.inSeconds}',
+        text:'time: ${gameRef.elapsedTime.elapsed.inSeconds}',
         anchor: Anchor.center,
         position: Vector2(gameRef.size.x*0.5,gameRef.size.y*0.3),
         textRenderer:
@@ -55,6 +55,7 @@ class SuccessScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks {
    gameRef.elapsedTime.start();
    gameRef.overlays.add(PauseButton.ID);
     gameRef.lives=3;
+    gameRef.list1.removeRange(0,gameRef.list1.length);
     gameRef.resumeEngine();
     super.onTapUp(event);
   }

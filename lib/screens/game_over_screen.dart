@@ -16,7 +16,7 @@ class GameOverScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
 
     add(
       TextComponent(
-        text:'score: ${gameRef.elapsedTime.elapsed.inSeconds}',
+        text:'time: ${gameRef.elapsedTime.elapsed.inSeconds}',
         anchor: Anchor.center,
         position: Vector2(gameRef.size.x*0.5,gameRef.size.y*0.3),
         textRenderer:

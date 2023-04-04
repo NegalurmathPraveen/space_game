@@ -60,9 +60,9 @@ class SpaceGame extends FlameGame
   Player player=Player();
   WordDisplay wordDisplay=WordDisplay();
   Hud hud=Hud();
-  List wordsList=[['G','U','M'],['S','I','M']];
+  List wordsList=[['G','U','M'],['E','A','T']];
   List list=['T','A','P'];
-  List list1=['T','A','P'];
+  List list1=[];
   LetterObstacles letterObstacles=LetterObstacles();
   BlastAnimation blast=BlastAnimation();
   late final RouterComponent router;

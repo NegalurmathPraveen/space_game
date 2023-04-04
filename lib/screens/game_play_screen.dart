@@ -11,6 +11,7 @@ import 'package:spacex/actors/word_letters.dart';
 
 
 import '../actors/obstacle.dart';
+import '../actors/word.dart';
 import '../gui/elapsed_time.dart';
 import '../main.dart';
 import '../utils/audio_manager.dart';
@@ -35,50 +36,19 @@ class GamePlayScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
     add(gameRef.player);
     add(LetterObstacles());
     add(WordLetters());
-    add(gameRef.wordDisplay);
+    add(Word());
+   // add(gameRef.wordDisplay);
     addShips();
   }
 
   void addShips() {
     interval.onTick = () {
-      double elapsedSeconds = gameRef.elapsedTime.elapsed.inSeconds.toDouble();
-
-      void addShipAtSecond(int secondToAdd) {
-        Future.delayed(Duration(seconds: secondToAdd), () {
-          add(LetterObstacles());
-        });
-      }
-
-      void addlettersAtSecond(int secondToAdd) {
-        Future.delayed(Duration(seconds: secondToAdd), () {
-          add(Obstacle());
-        });
-      }
-
-      void addWordAtSecond(int secondToAdd) {
-        Future.delayed(Duration(seconds: secondToAdd), () {
-          add(WordLetters());
-        });
-      }
+     // double elapsedSeconds = gameRef.elapsedTime.elapsed.inSeconds.toDouble();
 
       add(Obstacle());
       add(WordLetters());
       add(LetterObstacles());
-      if (elapsedSeconds > 10.0) {
-        addShipAtSecond(3);
-        addlettersAtSecond(5);
-        addWordAtSecond(2);
-      }
-      if (elapsedSeconds > 20.0) {
-        addShipAtSecond(2);
-        addlettersAtSecond(4);
-        addShipAtSecond(1);
-      }
-      if (elapsedSeconds > 30.0) {
-        addShipAtSecond(4);
-        addlettersAtSecond(6);
-        addWordAtSecond(3);
-      }
+
     };
   }
 
