@@ -55,7 +55,9 @@ class GameOverScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
     gameRef.router.pop();
     gameRef.elapsedTime.start();
     gameRef.overlays.add(PauseButton.ID);
+    gameRef.list1.removeRange(0,gameRef.list1.length);
     gameRef.resumeEngine();
+
     super.onTapUp(event);
   }
 }

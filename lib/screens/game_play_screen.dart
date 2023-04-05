@@ -6,12 +6,11 @@ import 'package:flame/parallax.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:spacex/actors/letter_obstacles.dart';
-import 'package:spacex/actors/word_display.dart';
 import 'package:spacex/actors/word_letters.dart';
 
 
 import '../actors/obstacle.dart';
-import '../actors/word.dart';
+import '../widgets/word_display.dart';
 import '../gui/elapsed_time.dart';
 import '../main.dart';
 import '../utils/audio_manager.dart';
@@ -37,6 +36,7 @@ class GamePlayScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
     add(LetterObstacles());
     add(WordLetters());
     add(Word());
+
    // add(gameRef.wordDisplay);
     addShips();
   }
@@ -45,9 +45,15 @@ class GamePlayScreen extends Component with HasGameRef<SpaceGame>, TapCallbacks 
     interval.onTick = () {
      // double elapsedSeconds = gameRef.elapsedTime.elapsed.inSeconds.toDouble();
 
-      add(Obstacle());
-      add(WordLetters());
-      add(LetterObstacles());
+        Future.delayed(Duration(seconds: 1), () {
+          add(Obstacle());
+        });
+        Future.delayed(Duration(seconds: 2), () {
+          add(WordLetters());
+        });
+        Future.delayed(Duration(seconds: 2), () {
+          add(LetterObstacles());
+        });
 
     };
   }

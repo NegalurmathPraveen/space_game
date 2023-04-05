@@ -8,9 +8,8 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart' hide Route;
-import 'package:spacex/actors/lives.dart';
+import 'package:spacex/widgets/lives.dart';
 import 'package:spacex/actors/letter_obstacles.dart';
-import 'package:spacex/actors/word_display.dart';
 import 'package:spacex/screens/success.dart';
 import 'package:spacex/utils/audio_manager.dart';
 
@@ -58,7 +57,6 @@ class GamePlay extends StatelessWidget {
 class SpaceGame extends FlameGame
     with HasTappableComponents,HasCollisionDetection,VerticalDragDetector {
   Player player=Player();
-  WordDisplay wordDisplay=WordDisplay();
   Hud hud=Hud();
   List wordsList=[['G','U','M'],['E','A','T']];
   List list=['T','A','P'];
@@ -118,14 +116,13 @@ class SpaceGame extends FlameGame
   @override
   void onVerticalDragStart(DragStartInfo info) {
 
-    pointerStartPosition=info.eventPosition.global;
-
+    pointerStartPosition=Vector2(0,pointerStartPosition!.y);
+    pointerCurrentPosition=Vector2(0,pointerCurrentPosition!.y);
     super.onVerticalDragStart(info);
   }
 
   @override
   void onVerticalDragUpdate(DragUpdateInfo info) {
-     AudioManager.playSfx('audio_jump.mp3');
      pointerCurrentPosition=info.eventPosition.global;
      delta= pointerCurrentPosition! - pointerStartPosition!;
 

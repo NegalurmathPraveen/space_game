@@ -66,7 +66,6 @@ class Player extends SpriteAnimationComponent
     {
       if(gameRef.lives>1)
       {
-        gameRef.add(BlastAnimation());
         AudioManager.playSfx('audio_life_lost.mp3');
         gameRef.lives-=1;
         //removeFromParent();

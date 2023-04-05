@@ -37,8 +37,9 @@ class WordLetters extends PositionComponent with HasGameRef<SpaceGame>,Collision
       size: Vector2(gameRef.size.y * 800 / 469, gameRef.size.y) * .10,
       anchor: Anchor.center,
     );
-    double yPosition = _random.nextDouble() * game.size.y;
-    position = Vector2(gameRef.size.x * .95, yPosition-50);
+    double yPosition = _random.nextDouble() * gameRef.size.y*0.95;
+    position = Vector2(gameRef.size.x * .95, yPosition);
+    position.clamp(Vector2.zero()+size/2, gameRef.size-size/2);
     add(_scoreTextComponent);
     add(RectangleHitbox.relative(Vector2(0.4, 1), anchor: Anchor.center,
         parentSize: Vector2(gameRef.size.y * 800 / 469, gameRef.size.y) * .10,
@@ -52,7 +53,6 @@ class WordLetters extends PositionComponent with HasGameRef<SpaceGame>,Collision
   @override
   void update(double dt) {
     super.update(dt);
-    position.clamp(Vector2.zero()+size/2, gameRef.size-size/2);
     if (x > 0 && !gameRef.success) {
       //_scoreTextComponent.text='D';
       x = x - 100 * dt;
@@ -75,6 +75,7 @@ class WordLetters extends PositionComponent with HasGameRef<SpaceGame>,Collision
       PositionComponent other) {
     if(other is Player)
     {
+      AudioManager.playSfx('audio_jump.mp3');
       removeFromParent();
       if(_scoreTextComponent.text==gameRef.list[0])
       {

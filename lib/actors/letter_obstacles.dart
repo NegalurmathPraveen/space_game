@@ -43,6 +43,7 @@ class LetterObstacles extends PositionComponent with HasGameRef<SpaceGame>,Colli
    );
    double yPosition = _random.nextDouble() * (game.size.y-50);
    position= Vector2(gameRef.size.x * .95, yPosition);
+   position.clamp(Vector2.zero()+size/2, gameRef.size-size/2);
    add(_scoreTextComponent);
    add(RectangleHitbox.relative(Vector2(0.4,1),anchor: Anchor.center,parentSize:Vector2(gameRef.size.y * 800 / 469, gameRef.size.y) * .10,position:gameRef.letterObstacles.position));
 
@@ -56,7 +57,6 @@ class LetterObstacles extends PositionComponent with HasGameRef<SpaceGame>,Colli
   @override
   void update(double dt) {
     super.update(dt);
-    position.clamp(Vector2.zero()+size/2, gameRef.size-size/2);
     if (x > 0 && !gameRef.gameOver) {
       //_scoreTextComponent.text='D';
       x = x - 100 * dt;

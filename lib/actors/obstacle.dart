@@ -25,8 +25,8 @@ class Obstacle extends SpriteComponent with HasGameRef<SpaceGame>,CollisionCallb
     flipHorizontallyAroundCenter();
     double yPosition = _random.nextDouble() * game.size.y;
     position = Vector2(gameRef.size.x * .95, yPosition);
+    position.clamp(Vector2.zero()+size/2, gameRef.size-size/2);
     add(CircleHitbox(anchor: Anchor.center, radius: size.y * .35, position: size / 2));
-
 
   }
 
@@ -50,12 +50,10 @@ class Obstacle extends SpriteComponent with HasGameRef<SpaceGame>,CollisionCallb
   @override
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
      if(other is Player)
-      removeFromParent();
-    }
-  @override
-  void onCollisionEnd(PositionComponent other) {
+       {
+         removeFromParent();
+       }
 
-    super.onCollisionEnd(other);
-  }
+    }
 
 }
