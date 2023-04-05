@@ -30,7 +30,7 @@ class Word extends PositionComponent with HasGameRef<SpaceGame>{
           color: Colors.white54,
         ),
       ),
-      position: Vector2(40+game.size.x*0.45,game.size.y*0.05),
+      position: Vector2(40+game.size.x*0.45,game.size.y*0.07),
       size:Vector2(gameRef.size.y * 600 / 469, gameRef.size.y) * .10,
       anchor: Anchor.center,
     );
@@ -43,7 +43,7 @@ class Word extends PositionComponent with HasGameRef<SpaceGame>{
           color: Colors.amber,
         ),
       ),
-      position: Vector2(game.size.x*0.435,game.size.y*0.05),
+      position: Vector2(game.size.x*0.435,game.size.y*0.07),
       size:Vector2(gameRef.size.y * 600 / 469, gameRef.size.y) * .10,
       anchor: Anchor.center,
     );

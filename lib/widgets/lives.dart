@@ -75,8 +75,9 @@ class Hud extends PositionComponent with HasGameRef<SpaceGame> {
       await add(
         HeartHealthComponent(
           heartNumber: i,
-          position: Vector2(positionX.toDouble(), 20),
+          position: Vector2(positionX.toDouble(),gameRef.size.y*0.07),
           size: Vector2.all(32),
+          anchor: Anchor.topLeft
         ),
       );
     }

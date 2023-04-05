@@ -8,6 +8,7 @@ import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart' hide Route;
+import 'package:flutter/services.dart';
 import 'package:spacex/widgets/lives.dart';
 import 'package:spacex/actors/letter_obstacles.dart';
 import 'package:spacex/screens/success.dart';
@@ -23,6 +24,9 @@ import 'screens/start_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+    SystemUiOverlay.bottom
+  ]);
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     home: GamePlay(),));
@@ -115,15 +119,19 @@ class SpaceGame extends FlameGame
 
   @override
   void onVerticalDragStart(DragStartInfo info) {
-
-    pointerStartPosition=Vector2(0,pointerStartPosition!.y);
-    pointerCurrentPosition=Vector2(0,pointerCurrentPosition!.y);
+    print('start');
+    pointerStartPosition=Vector2(0, pointerStartPosition!.y);
+    pointerCurrentPosition=info.eventPosition.global;
+    delta= pointerCurrentPosition! - pointerStartPosition!;
+    print(pointerCurrentPosition);
     super.onVerticalDragStart(info);
   }
 
   @override
   void onVerticalDragUpdate(DragUpdateInfo info) {
+    print('update');
      pointerCurrentPosition=info.eventPosition.global;
+    print(pointerCurrentPosition);
      delta= pointerCurrentPosition! - pointerStartPosition!;
 
     super.onVerticalDragUpdate(info);
@@ -131,11 +139,10 @@ class SpaceGame extends FlameGame
 
   @override
   void onVerticalDragEnd(DragEndInfo info) {
-
+     print('end');
     pointerCurrentPosition=Vector2(0,pointerCurrentPosition!.y);
     pointerStartPosition=Vector2(0, pointerStartPosition!.y);
 
     super.onVerticalDragEnd(info);
   }
-
 }
