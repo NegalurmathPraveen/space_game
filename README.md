@@ -45,3 +45,4 @@ known bugs:
 
 1.the changing of colors of the letters of the word overlaps sometimes
 2. the obstacles are grouped sometimes and may go out of the screen 
+3. on first running the app shows black screen on click of which the game will start
